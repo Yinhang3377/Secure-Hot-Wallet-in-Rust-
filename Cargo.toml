@@ -15,7 +15,7 @@ edition = "2021"
 # rand：安全随机数生成
 aes-gcm = "0.10"
 secp256k1 = { version = "0.28", features = ["rand-std"] }
-thiserror = "1.0"
+thiserror = "2.0"
 log = "0.4"
 env_logger = "0.10"
 serde = { version = "1.0", features = ["derive"] }
