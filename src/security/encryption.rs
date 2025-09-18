@@ -1,10 +1,10 @@
-//! 加密模块：负责钱包核心数据的加解密逻辑
-//! 支持对称加密（如 AES-GCM）、非对称加密（如 secp256k1）等
+/// 加密模块：负责钱包核心数据的加解密逻辑
+/// 支持对称加密（如 AES-GCM）、非对称加密（如 secp256k1）等
 
 use aes_gcm::{ Aes256Gcm, Key, Nonce };
-use aes_gcm::aead::{ Aead, NewAead };
+use aes_gcm::aead::{ Aead };
+use aes_gcm::KeyInit;
 use zeroize::Zeroize;
-use rand::Rng;
 use crate::tools::error::WalletError;
 
 /// WalletSecurity handles cryptographic operations for the hot wallet.
@@ -36,11 +36,11 @@ impl WalletSecurity {
         }
 
         // 用密钥初始化加密器
-        let mut key = Key::from_slice(encryption_key.as_bytes()).clone();
+        let mut key = Key::<Aes256Gcm>::from_slice(encryption_key.as_bytes()).clone();
         let cipher = Aes256Gcm::new(&key);
 
         // 生成随机12字节nonce
-        let nonce_bytes: [u8; 12] = rand::thread_rng().gen();
+        let nonce_bytes: [u8; 12] = rand::random();
         let nonce = Nonce::from_slice(&nonce_bytes);
 
         // 加密私钥
@@ -72,6 +72,7 @@ impl WalletSecurity {
     /// - 默认前12字节为nonce
     /// - 密钥用完自动清零
     /// - 生产环境需校验密钥派生与nonce管理
+    #[allow(dead_code)]
     pub fn decrypt_private_key(
         ciphertext: &[u8],
         encryption_key: &str
@@ -86,7 +87,7 @@ impl WalletSecurity {
         let actual_ciphertext = &ciphertext[12..];
 
         // 用密钥初始化解密器
-        let mut key = Key::from_slice(encryption_key.as_bytes()).clone();
+        let mut key = Key::<Aes256Gcm>::from_slice(encryption_key.as_bytes()).clone();
         let cipher = Aes256Gcm::new(&key);
 
         // 解密数据

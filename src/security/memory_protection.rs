@@ -1,9 +1,10 @@
-//! 内存保护模块：防止敏感数据在内存中泄露
-//! 包含自动清零、内存锁定等机制
+/// 内存保护模块：防止敏感数据在内存中泄露
+/// 包含自动清零、内存锁定等机制
 
 use zeroize::Zeroize;
 
 /// 敏感数据包装器，自动清零
+#[allow(dead_code)]
 pub struct SensitiveData<T: Zeroize> {
     pub data: T,
 }
@@ -14,6 +15,7 @@ impl<T: Zeroize> Drop for SensitiveData<T> {
     }
 }
 
+#[allow(dead_code)]
 impl<T: Zeroize> SensitiveData<T> {
     /// 创建新的敏感数据包装器
     pub fn new(data: T) -> Self {
@@ -22,16 +24,19 @@ impl<T: Zeroize> SensitiveData<T> {
 }
 
 /// 内存锁定接口（预留，平台相关实现）
+#[allow(dead_code)]
 pub trait MemoryLock {
     fn lock(&self) -> bool;
     fn unlock(&self) -> bool;
 }
-//! 内存保护与敏感数据定期清理
+/// 内存保护与敏感数据定期清理
 
+#[allow(dead_code)]
 pub struct MemoryProtector {
     // TODO: 内存加密与定期清理实现
 }
 
+#[allow(dead_code)]
 impl MemoryProtector {
     pub fn new() -> Self {
         MemoryProtector {}
