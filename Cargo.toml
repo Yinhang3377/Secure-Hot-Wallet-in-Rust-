@@ -1,0 +1,23 @@
+[package]
+name = "hot_wallet"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# --- 核心依赖说明 ---
+# aes-gcm：对称加密算法（AES-GCM），用于钱包数据加密
+# secp256k1：椭圆曲线加密算法，区块链私钥/签名
+# thiserror：简洁的错误处理库
+# log：标准日志接口
+# env_logger：环境变量驱动的日志实现
+# serde：序列化/反序列化，含 derive 特性
+# zeroize：内存敏感数据自动清零，防止泄露
+# rand：安全随机数生成
+aes-gcm = "0.10"
+secp256k1 = { version = "0.28", features = ["rand-std"] }
+thiserror = "1.0"
+log = "0.4"
+env_logger = "0.10"
+serde = { version = "1.0", features = ["derive"] }
+zeroize = "1.8"
+rand = "0.8"
