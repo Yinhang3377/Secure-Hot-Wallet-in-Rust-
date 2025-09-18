@@ -14,7 +14,7 @@ edition = "2021"
 # zeroize：内存敏感数据自动清零，防止泄露
 # rand：安全随机数生成
 aes-gcm = "0.10"
-secp256k1 = { version = "0.28", features = ["rand-std"] }
+secp256k1 = { version = "0.31", features = ["rand-std"] }
 thiserror = "1.0"
 log = "0.4"
 env_logger = "0.10"
